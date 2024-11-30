@@ -1,0 +1,31 @@
+name: Python Package
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: Install Python dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y python3-distutils python3.12-venv
+        pip install --upgrade pip setuptools wheel
+
+    - name: Install project requirements
+      run: pip install -r requirements.txt
+
+    - name: Run your script
+      run: python app.py
